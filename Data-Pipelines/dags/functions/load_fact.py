@@ -1,8 +1,11 @@
-from airflow.models import BaseOperator
 from airflow.hooks.postgres_hook import PostgresHook
+from airflow.models import BaseOperator
+
 
 class LoadFactOperator(BaseOperator):
+
     ui_color = '#F98866'
+    # Define your operators params (with defaults) here
     def __init__(
         self,
         connection_id: str,
@@ -12,19 +15,19 @@ class LoadFactOperator(BaseOperator):
         *args, **kwargs
     ):
         """
-        Initializes the LoadFactOperator to load data into a fact table.
+        Initializes the LoadFactOperator for loading data into a fact table.
 
-        :param connection_id: The Airflow connection ID to use for the PostgreSQL database.
-        :param table: The name of the target fact table.
-        :param sql_query: The SQL query to execute for loading data into the fact table.
-        :param is_truncated: Flag to determine if the fact table should be truncated before loading new data.
+        :param connection_id: The Airflow connection ID to utilize for the PostgreSQL database.
+        :param table: The name of the destination fact table.
+        :param sql_query: The SQL query to be executed for loading data into the fact table.
+        :param is_truncated: A flag to indicate whether the fact table should be truncated before loading new data.
         """
         super(LoadFactOperator, self).__init__(*args, **kwargs)
         self.connection_id = connection_id
         self.table = table
         self.sql_query = sql_query
         self.is_truncated = is_truncated
-
+		# Map params here
     def execute(self, context):
         postgres_hook = PostgresHook(postgres_conn_id=self.connection_id)
         self.log.info(f'Loading data into {self.table} fact table.')
