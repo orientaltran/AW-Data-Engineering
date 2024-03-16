@@ -21,3 +21,5 @@ step_trainer/
 ```
 
 **Note:** `step_trainer/curated/` contains the data files for the `machine_learning_curated` table.
+
+aws iam put-role-policy --role-name my-glue-service-role --policy-name S3Access --policy-document '{ "Version": "2012-10-17", "Statement": [ { "Sid": "ListObjectsInBucket", "Effect": "Allow", "Action": [ "s3:ListBucket" ], "Resource": [ "arn:aws:s3:::pj3oriental" ] }, { "Sid": "AllObjectActions", "Effect": "Allow", "Action": "s3:*Object", "Resource": [ "arn:aws:s3:::pj3oriental/*" ] } ] }'

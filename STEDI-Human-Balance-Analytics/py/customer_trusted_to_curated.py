@@ -22,47 +22,47 @@ job = Job(glueContext)
 job.init(args["JOB_NAME"], args)
 
 # Script generated for node customer_trusted
-customer_trusted_node1709397342755 = glueContext.create_dynamic_frame.from_catalog(
-    database="stedi",
+customer_trusted_node1710579115474 = glueContext.create_dynamic_frame.from_catalog(
+    database="pj3oriental",
     table_name="customer_trusted",
-    transformation_ctx="customer_trusted_node1709397342755",
+    transformation_ctx="customer_trusted_node1710579115474",
 )
 
 # Script generated for node accelerometer_landing
-accelerometer_landing_node1709397404364 = glueContext.create_dynamic_frame.from_catalog(
-    database="stedi",
+accelerometer_landing_node1710579040335 = glueContext.create_dynamic_frame.from_catalog(
+    database="pj3oriental",
     table_name="accelerometer_landing",
-    transformation_ctx="accelerometer_landing_node1709397404364",
+    transformation_ctx="accelerometer_landing_node1710579040335",
 )
 
 # Script generated for node SQL Query
-SqlQuery523 = """
+SqlQuery545 = """
 select customer_trusted.* from customer_trusted join accelerometer_landing on customer_trusted.email = accelerometer_landing.user;
 """
-SQLQuery_node1709397451705 = sparkSqlQuery(
+SQLQuery_node1710578919575 = sparkSqlQuery(
     glueContext,
-    query=SqlQuery523,
+    query=SqlQuery545,
     mapping={
-        "customer_trusted": customer_trusted_node1709397342755,
-        "accelerometer_landing": accelerometer_landing_node1709397404364,
+        "customer_trusted": customer_trusted_node1710579115474,
+        "accelerometer_landing": accelerometer_landing_node1710579040335,
     },
-    transformation_ctx="SQLQuery_node1709397451705",
+    transformation_ctx="SQLQuery_node1710578919575",
 )
 
 # Script generated for node customer_trusted_to_curated
-customer_trusted_to_curated_node1709397522005 = glueContext.getSink(
-    path="s3://sdi-lakehouses/customer_trusted_to_curated/",
+customer_trusted_to_curated_node1710579193453 = glueContext.getSink(
+    path="s3://pj3oriental/customer_trusted_to_curated/",
     connection_type="s3",
     updateBehavior="UPDATE_IN_DATABASE",
     partitionKeys=[],
     enableUpdateCatalog=True,
-    transformation_ctx="customer_trusted_to_curated_node1709397522005",
+    transformation_ctx="customer_trusted_to_curated_node1710579193453",
 )
-customer_trusted_to_curated_node1709397522005.setCatalogInfo(
-    catalogDatabase="stedi", catalogTableName="customer_trusted_to_curated"
+customer_trusted_to_curated_node1710579193453.setCatalogInfo(
+    catalogDatabase="pj3oriental", catalogTableName="customer_trusted_to_curated"
 )
-customer_trusted_to_curated_node1709397522005.setFormat(
+customer_trusted_to_curated_node1710579193453.setFormat(
     "glueparquet", compression="snappy"
 )
-customer_trusted_to_curated_node1709397522005.writeFrame(SQLQuery_node1709397451705)
+customer_trusted_to_curated_node1710579193453.writeFrame(SQLQuery_node1710578919575)
 job.commit()
